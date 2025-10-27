@@ -1,4 +1,39 @@
-#include <iostream>
+#include "entity/entity.h"
+#include "ecs/ecsManager.h"
+#include "ecs/systems/transformSystem.h"
+#include "ecs/systems/renderSystem.h"
+#include "ecs/systems/editorSystem.h"
+#include "global/globalEntity.h"
+
+void Entity::init()
+{
+    ECS::ECSManager::init();
+    ECS::RenderSystem::init();
+    
+    std::string configFile = global::Entity::getConfigFile();
+    ECS::ECSManager::loadEntitiesFromFile(configFile);
+}
+
+void Entity::update(float deltaTime)
+{
+    auto& registry = ECS::ECSManager::getRegistry();
+    
+    // Update transforms (recalculate matrices)
+    ECS::TransformSystem::update(registry);
+    
+    // Show editor UI (EDIT_MODE only)
+    ECS::EditorSystem::update(registry);
+    
+    // Render all entities
+    ECS::RenderSystem::render(registry, deltaTime);
+}
+
+void Entity::saveConfig()
+{
+    ECS::EditorSystem::saveConfig();
+}
+
+/*#include <iostream>
 #include <string>
 #include <fstream>
 #include <memory>
@@ -180,3 +215,4 @@ void Entity::update(float deltaTime)
         }
 
 }
+*/

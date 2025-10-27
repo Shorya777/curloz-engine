@@ -1,5 +1,14 @@
 #pragma once
 
+class Entity {
+public:
+    static void init();
+    static void update(float deltaTime);
+    static void saveConfig();
+};
+
+/* #pragma once
+
 #include<vector>
 #include <memory>
 #include <string>
@@ -19,3 +28,5 @@ class Entity
                 static void update (float deltaTime);
 
 };
+*/
+
