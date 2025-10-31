@@ -1,14 +1,17 @@
 cmake_minimum_required(VERSION 3.10)
-project(Curloz_Engine)
+project(Curloz_Engine LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-option(CMAKE_BUILD_TYPE "Build type" Debug)
+#option(CMAKE_BUILD_TYPE "Build type" Debug)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Build type" FORCE)
+endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL Debug)
 		message(STATUS "Debug mode(default)")
-		add_compile_options(-g -O0 -DDEBUG)
+		add_compile_options(-g -O0 -fno-omit-frame-pointer -ggdb -DDEBUG)
 		add_compile_definitions(DEBUG)
 		add_link_options(-g)
 endif()
@@ -22,21 +25,23 @@ find_package(OpenGL REQUIRED)
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/*/*.cpp src/*/*.c)
 add_executable(Curloz_Engine ${SOURCES})
 target_include_directories(Curloz_Engine PRIVATE include)
+target_link_libraries(Curloz_Engine PRIVATE OpenGL::GL)
 
-target_link_libraries(Curloz_Engine OpenGL::GL)
+
 if(WIN32)
-		link_directories(lib/windows)
-		target_link_libraries(Curloz_Engine
-				${CMAKE_SOURCE_DIR}/lib/windows/libglfw3.a 
-				${CMAKE_SOURCE_DIR}/lib/windows/libassimp.a
-				${CMAKE_SOURCE_DIR}/lib/windows/libz.a
-			)
+    link_directories(${CMAKE_SOURCE_DIR}/lib/windows)
+    target_link_libraries(Curloz_Engine PRIVATE
+        ${CMAKE_SOURCE_DIR}/lib/windows/libglfw3.a
+        ${CMAKE_SOURCE_DIR}/lib/windows/libassimp.a
+        ${CMAKE_SOURCE_DIR}/lib/windows/libz.a
+    )
 endif()
+
 if(UNIX AND NOT APPLE)
-		link_directories(lib/linux)
-		target_link_libraries(Curloz_Engine
-				${CMAKE_SOURCE_DIR}/lib/linux/libglfw3.a 
-				${CMAKE_SOURCE_DIR}/lib/linux/libassimp.a
-				${CMAKE_SOURCE_DIR}/lib/linux/libz.a
-			)
-endif()	
+    link_directories(${CMAKE_SOURCE_DIR}/lib/linux)
+    target_link_libraries(Curloz_Engine PRIVATE
+        ${CMAKE_SOURCE_DIR}/lib/linux/libglfw3.a
+        ${CMAKE_SOURCE_DIR}/lib/linux/libassimp.a
+        ${CMAKE_SOURCE_DIR}/lib/linux/libz.a
+    )
+endif()

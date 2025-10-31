@@ -7,6 +7,11 @@ namespace ECS {
 
     class ECSManager {
     public:
+    /* 
+    This class will contain all necessary functions for loading the entities 
+    from the entity.json file, whenever you would want to add a new entity in
+    the program just edit the entity.json file
+    */
         static void init();
         static void shutdown();
         

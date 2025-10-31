@@ -5,6 +5,9 @@
 namespace ECS {
 
     class RenderSystem {
+        /*
+        This class contains all functions for rendering static entities
+        */
     public:
         static void init();
         static void render(entt::registry& registry, float deltaTime);

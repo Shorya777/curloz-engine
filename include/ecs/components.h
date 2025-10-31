@@ -5,6 +5,11 @@
 #include "shader/shader.h"
 
 namespace ECS {
+    /* 
+    This file contains all the definitions of the components that are supposed 
+    to be assigned to an entity, whenever you would want to make a new component
+    just make a structure for it here
+    */
 
     struct TransformComponent {
         glm::vec3 position = glm::vec3(0.0f);
@@ -36,7 +41,7 @@ namespace ECS {
             : shader(vertPath.c_str(), fragPath.c_str()) {}
     };
 
-    struct RenderableType {};
+    struct RenderableTag {};
 
     struct StaticTag {};
 

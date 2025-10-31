@@ -56,7 +56,7 @@ namespace ECS {
             
             auto& components = entityData["components"];
             
-            // ADD TRANSFORM COMPONENT (if specified)
+            // ADD TRANSFORM COMPONENT
             if (components.contains("transform")) {
                 auto& transformData = components["transform"];
                 
@@ -108,7 +108,7 @@ namespace ECS {
             
             // ADD TYPE
             if (components.contains("type")) {
-                std::string typeName = components["type"]
+                std::string typeName = components["type"];
                 if (typeName == "renderStatic") {
                     s_Registry.emplace<RenderableTag>(entity);
                 }
@@ -117,7 +117,7 @@ namespace ECS {
             std::cout << "Loaded entity: " << name << std::endl;
         }
         
-        std::cout << "Total entities loaded: " << s_Registry.size() << std::endl;
+//        std::cout << "Total entities loaded: " << s_Registry.size() << std::endl;
     }
 
     // SAVE ENTITIES BACK TO JSON

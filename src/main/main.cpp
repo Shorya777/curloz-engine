@@ -176,7 +176,7 @@ int main()
 
         global::update();
         global::saveConfig();
-        Entity::saveConfig();
+//        Entity::saveConfig();
 
         glfwTerminate();
         return 0;
